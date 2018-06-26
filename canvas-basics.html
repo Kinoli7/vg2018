@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <style>
+            body, body {
+                padding: 0;
+                margin: 0;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            //consle.log("hola");
+        
+            const canvas = document.createElement('canvas')
+            const ctx = canvas.getContext('2d')
+            document.body.appendChild(canvas)
+
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+
+            ctx.fillStyle = 'lightblue'
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            
+            // rect
+            // l
+            
+
+            // 2ll
+            /*ctx.fillStyle = 'red'
+            ctx.fillRect(150, 50, 30, 50)
+
+            ctx.fillStyle = 'red'
+            ctx.fillRect(190, 50, 30, 50)
+            
+            //3ll
+            ctx.fillStyle = 'red'
+            ctx.fillRect(50, 150, 30, 50)
+
+            ctx.fillStyle = 'red'
+            ctx.fillRect(90, 150, 30, 50)
+
+            //4l_
+            ctx.fillStyle = 'red'
+            ctx.fillRect(150, 150, 30, 50)
+
+            ctx.fillStyle = 'red'
+            ctx.fillRect(190, 170, 50, 30)*/
+
+            // arc
+            /*ctx.fillStyle = 'green'
+            ctx.beginPath()
+            ctx.arc(110, 65, 15, 0, Math.PI*2)
+            ctx.fill()
+
+            ctx.strokeStyle = 'darkgreen'
+            ctx.lineWidth = 5
+            ctx.stroke()
+
+            ctx.beginPath()
+            ctx.fillStyle = 'purple'
+            ctx.fillRect(50, 100, 30, 30)
+            ctx.fill()
+            ctx.stroke()*/
+            
+            // triangle
+            /*ctx.fillStyle = 'blue'
+            ctx.moveTo(150, 50)
+            ctx.lineTo(165, 80)
+            ctx.lineTo(135, 80)
+            ctx.fill()*/
+
+            /*ctx.closePath()
+            ctx.strokeStyle = 'cyan'
+            ctx.stroke()
+
+            for (let i = 0; i < 10; ++i)
+            {
+                ctx.fillStyle = '#${i}033ff'
+                ctx.fillRect(50 + i*40, 150, 30, 30)
+            }
+            */
+            /*
+
+        while (...)  {
+
+        }
+
+        switch (...) {
+            case 'd': ...; break
+            case 'e': ...; break
+        }
+
+        &&
+        !!
+        <
+        >
+        ==
+        }
+*/
+
+let x = 0
+let y = 0
+
+let isMouseDown = false;
+let isKeyDown = false;
+
+const speed = 5;
+function render () {
+    requestAnimationFrame(render)
+
+    ctx.fillStyle = 'lightblue'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    ctx.fillStyle = 'lightyellow'
+    ctx.fillRect (0, 200, canvas.width, 30)
+    
+    if (keyboard.a) x -= speed
+    if (keyboard.d) x += speed
+    if (keyboard.w) y -= speed
+    if (keyboard.s) y += speed
+
+    ctx.fillStyle = 'yellow'
+    const now = Date.now() / 200
+    ctx.fillRect(
+        Math.sin(now)*(canvas.width/2) + canvas.width/2,
+        200,
+        30,
+        30)
+    //x++
+
+    if (isMouseDown || isKeyDown) ctx.fillStyle = 'red'
+    ctx.fillRect(x-30/2, y-30/2, 30, 30) //30/2 es la mitad del size del cuadrado
+}
+
+requestAnimationFrame(render)
+
+document.addEventListener('mousemove', function(event) {
+    x = event.pageX
+    y = event.pageY
+})
+
+document.addEventListener('mousedown', function(event) {
+    isMouseDown = true;
+})
+document.addEventListener('mouseup', function(event) {
+    isMouseDown = false;
+})
+
+const keyboard = {}
+document.addEventListener('keydown', function(event) {
+    /*switch (event.key) {
+        case 'a': x -= speed; break
+        case 'd': x += speed; break
+        case 'w': y -= speed; break
+        case 's': y += speed; break
+    }*/
+    keyboard[event.key] = true
+})
+
+document.addEventListener('keyup', function(event)
+{
+    keyboard[event.key] = false
+})
+
+        </script>
+    </body>
+</html>
