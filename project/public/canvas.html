@@ -27,7 +27,6 @@
 
         // Variables
         let state
-        let oldState
         let myPlayer
 
         function render () {
@@ -35,38 +34,43 @@
 
             if (state == null) return
 
-            const { players } = state
+            const { players, bullets } = state
 
             // Erase screen
             ctx.globalAlpha = 0.2
-            ctx.fillStyle = 'white'
+            ctx.fillStyle = 'black'
             ctx.fillRect(0, 0, canvas.width, canvas.height)
             ctx.globalAlpha = 1
-            
+
             // Player render
             ctx.save()
-            ctx.scale(0.5, 0.5)
+            //ctx.scale(0.5, 0.5)
             players.forEach( (player, i) => {
                 ctx.save()
                 ctx.translate(player.x, player.y)
-                if (oldState != null)
-                {
-                    oldPlayer = oldState.players[i]
-                    if (oldPlayer != null) {
-                        xdir = player.x - oldPlayer.x
-                        ydir = player.y - oldPlayer.y
-                        if (xdir > 0) player.lastDir = "right"
-                        else if (xdir < 0) player.lastDir = "left"
-                        else if (ydir < 0) player.lastDir = "up"
-                        else if (ydir > 0) player.lastDir = "down"
-                        else player.lastDir = oldPlayer.lastDir
-                    }
-                }
+                ctx.save()
+                ctx.translate(-10, -30)
+                ctx.fillStyle = 'white'
+                ctx.font = '30px console'
+                console.log(player.score)
+                ctx.fillText(String(player.score), 0, 0)
+                ctx.restore()
                 if (player.lastDir == "right") ctx.rotate(-Math.PI/2)
                 else if (player.lastDir == "left") ctx.rotate(Math.PI/2)
                 else if (player.lastDir == "up") ctx.rotate(Math.PI)
-                Eximo.drawSprite ('spaceShips_001.png', ctx, -106/2, -80/2)
+                //Eximo.drawSprite ('spaceShips_001.png', ctx, -106/4, -80/4)
+                Eximo.drawSprite ('spaceship.png', ctx, -53/2, -40/2)
                 ctx.restore()
+            })
+            ctx.restore()
+
+            // Bullet render
+            ctx.save()
+            bullets.forEach( (bullet, i) =>  {
+                ctx.fillStyle = 'white'
+                ctx.beginPath()
+                ctx.arc(bullet.x, bullet.y, 5, 0, Math.PI*2)
+                ctx.fill()
             })
             ctx.restore()
         }
@@ -79,7 +83,8 @@
             a: 'left',
             d: 'right',
             w: 'up',
-            s: 'down'
+            s: 'down',
+            j: 'shoot'
         }
         
         document.addEventListener('keydown', function(event) {
@@ -95,7 +100,6 @@
         const socket = io()
 
         socket.on('state', function (newState) {
-            oldState = state
             state = newState
             myPlayer = state.players.find(player => {
                 return (player.id === socket.id)

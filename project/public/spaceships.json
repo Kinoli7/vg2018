@@ -1,12 +1,12 @@
 {"frames": {
 
-"spaceShips_001.png":
+"spaceship.png":
 {
-	"frame": {"x":0,"y":0,"w":106,"h":80},
+	"frame": {"x":0,"y":0,"w":53,"h":40},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":106,"h":80},
-	"sourceSize": {"w":106,"h":80},
+	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":40},
+	"sourceSize": {"w":53,"h":40},
 	"pivot": {"x":0.5,"y":0.5}
 }},
 "meta": {
@@ -14,8 +14,8 @@
 	"version": "1.0",
 	"image": "spaceships.png",
 	"format": "RGBA8888",
-	"size": {"w":106,"h":80},
+	"size": {"w":53,"h":40},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:a4b1e5ac09b69b77ba01da8b76b96517:cdcd9736b1a95d35f3d11881dceec77f:3272f82166f65e17cc3a00865a7647ff$"
+	"smartupdate": "$TexturePacker:SmartUpdate:62ee018ef6ec1fede209b708d1973f7b:b759ab4a6bcd371b120979a754e3689b:3272f82166f65e17cc3a00865a7647ff$"
 }
 }
