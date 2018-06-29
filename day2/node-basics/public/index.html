@@ -1,0 +1,22 @@
+<head>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <script>
+        const socket = io()
+        let username = prompt('What is your name?')
+        //socket.emit('msg', username)
+
+        /*socket.emit('msg', 'hi my name is david')*/
+
+        socket.on('msg', function (message) {
+            console.log(message)
+        })
+        
+        function sendMessage () {
+            let message_prompt = prompt('Message:')
+            socket.emit('msg', username+': '+message_prompt)
+        }
+        //prompt('aasd')
+    </script> 
+</body>

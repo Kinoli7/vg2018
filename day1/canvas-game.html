@@ -1,0 +1,174 @@
+<html>
+    <head>
+        <style>
+            body, body {
+                padding: 0;
+                margin: 0;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            const canvas = document.createElement('canvas')
+            const ctx = canvas.getContext('2d')
+            document.body.appendChild(canvas)
+
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+
+            ctx.fillStyle = 'lightblue'
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+            let isMouseDown = false
+            let player_size_x = 30/2
+            let player_size_y = 30/2
+
+            const player = {
+                x: 0,
+                y: 0,
+                size: 20,
+                score: 0
+            }
+            
+            const coins = []
+            const num_coins = 5
+            for (let i=0; i<num_coins; i++)
+            {
+                coins.push({
+                    x: Math.random()*canvas.width,
+                    y: Math.random()*canvas.height,
+                    size: 10
+                })
+            }
+
+            const enemies = []
+            const num_enemies = 20
+            for (let i=0; i<num_enemies; i++)
+            {
+                enemies.push({
+                    x: Math.random()*canvas.width,
+                    y: Math.random()*canvas.height,
+                    vx: 5,
+                    vy: 5,
+                    size: Math.random() * 20 + 10
+                })
+            }
+
+            /*
+            const enemies = []
+            enemies.push({
+                x: 5, y: 6
+                vx: 1, vy: 1
+            })
+            Math.random() * canvas.width
+            enemies.splice(i, 1)
+            const enemy = enemies[i]
+            enemies.forEach(function (enemy) {
+
+            })
+
+            function collision (obj1, obj2 {
+                ...
+                return ...
+
+            })
+            (obj1, obj2) => { ... }
+            obj1 => { ... }
+            */
+
+            function collision (obj1, obj2) {
+                const sizeSum = (obj1.size/2 + obj2.size/2)
+                return ( (Math.abs(obj1.x - obj2.x) < sizeSum) &&
+                (Math.abs(obj1.y - obj2.y) < sizeSum) )
+            }
+
+            const speed = 5;
+            function render () {
+                requestAnimationFrame(render)
+
+                ctx.fillStyle = 'lightblue'
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+                /*if (keyboard.a) x -= speed
+                if (keyboard.d) x += speed
+                if (keyboard.w) y -= speed
+                if (keyboard.s) y += speed*/
+
+                //if (isMouseDown) ctx.fillStyle = 'red'
+                
+                // enemies logic
+                let hasPlayerCollided = false
+                enemies.forEach(enemy => {
+                    enemy.x += enemy.vx
+                    enemy.y += enemy.vy
+                    if (enemy.x < 0 || enemy.x > canvas.width) enemy.vx *= -1
+                    if (enemy.y < 0 || enemy.y > canvas.height) enemy.vy *= -1
+                    if (collision(enemy, player)) hasPlayerCollided = true
+                });
+                
+                // enemy render
+                enemies.forEach(enemy => {
+                    ctx.fillStyle = 'red'
+                    ctx.fillRect(
+                        enemy.x - enemy.size/2,
+                        enemy.y - enemy.size/2,
+                        enemy.size,
+                        enemy.size
+                    )
+                })
+
+                // coin logic
+                coins.forEach((coin, i) => {
+                    if (collision(player,coin)){
+                        player.score += Math.ceil(coin.size)
+                        coins.splice(i, 1)
+                    }
+                })
+
+                // coin render
+                coins.forEach(coin => {
+                    ctx.fillStyle = 'yellow'
+                    ctx.save()
+                    ctx.translate(coin.x, coin.y)
+                    ctx.rotate(Date.now() % (Math.PI*2))
+                    ctx.fillRect (
+                        -coin.size/2,
+                        -coin.size/2,
+                        coin.size,
+                        coin.size
+                    )
+                    ctx.restore()
+                })
+
+
+
+                ctx.fillStyle = hasPlayerCollided ? 'blue' : 'cyan'
+                ctx.fillRect(player.x-player.size/2, player.y-player.size/2, player.size, player.size) //30/2 es la mitad del size del cuadrado
+                
+                ctx.fillStyle = 'black'
+                ctx.font = '30px Helvetica'
+                ctx.fillText(`Score: ${player.score}`, 30, 40)
+
+            }
+
+            requestAnimationFrame(render)
+
+            document.addEventListener('mousemove', function(event) {
+                player.x = event.pageX
+                player.y = event.pageY
+            })
+
+            document.addEventListener('mousedown', function(event) {
+                isMouseDown = true;
+            })
+
+            document.addEventListener('mouseup', function(event) {
+                isMouseDown = false;
+            })
+        </script>
+    </body>
+</html>

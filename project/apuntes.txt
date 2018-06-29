@@ -1,0 +1,11 @@
+// Calculo de los tiempos del cliente/servidor
+/*
+ping = (t1 - t0)/2
+(delta)A Clock = ts' - tc
+ts' = ts + ping
+tiempo de inicio del clock = tiempo de inicio del servidor + (delta)A Clock
+si calculas ping/LOGIC_INTERVAL sabes cuantos turnos has de ir por delante como cliente
+(normalmente se rendondea a la alta y se le suman unos 10ms para tener margen de variación de ping)
+(tiempo actual - tiempo de inicio de la partida) / LOGIC_INTERVAL = estado actual de la partida
+(se redondea hacia abajo)
+*/
