@@ -1,0 +1,17 @@
+{
+  "name": "legend_of_the_galactic_heroes",
+  "version": "1.0.0",
+  "main": "server-logic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kinoli",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express.io": "^1.1.13",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
